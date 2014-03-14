@@ -43,7 +43,7 @@ would produce:
 
 ## Contributing
 
-1. Fork it ( http://github.com/<my-github-username>/clean_filenames/fork )
+1. Fork it ( http://github.com/tamouse/clean_filenames/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
