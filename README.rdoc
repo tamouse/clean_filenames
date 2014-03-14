@@ -1,18 +1,26 @@
-= clean_filenames - DESCRIBE YOUR GEM
+= clean_filenames - Give file name paths clean names
 
-Author::  YOUR NAME (YOUR EMAIL)
-Copyright:: Copyright (c) 2014 YOUR NAME
+Author::  Tamara Temple <tamouse@gmail.com>
+Copyright:: Copyright (c) 2014 Tamara Temple
 
 
 License:: mit, see LICENSE.txt
 
 
 
-DESCRIBE YOUR GEM HERE
+Clean Filenames converts file name paths to clean names with only lower-case alphanumerics and hyphens.
+
+For example, the following path:
+
+    Mary\ Jane\ Lamond/Làn\ Dùil/01\ A\ Mhàiri\ Bhòidheach.mp3 
+
+would be converted to:
+
+    mary-jane-lamond/lan-duil/01-a-mhairi-bhoidheach.mp3
 
 == Links
 
-* {Source on Github}[LINK TO GITHUB]
+* {Source on Github}[https://github.com/tamouse/clean_filenames]
 * RDoc[LINK TO RDOC.INFO]
 
 == Install
