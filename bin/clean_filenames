@@ -8,48 +8,33 @@ class App
   include Methadone::Main
   include Methadone::CLILogging
 
-  main do |path_name| # Add args you want: |like,so|
-    # your program code here
-    # You can access CLI options via
-    # the options Hash
+  main do
+
+    logger.level=Logger::INFO
+    logger.level=Logger::ERROR if options[:quiet]
+    logger.error_level=Logger::DEBUG if options[:debug]
     
-    debug path_name.inspect
-    debug options.inspect
-    
-    puts CleanFilenames.run(path_name, options)
+    debug "options: #{options.inspect}"
+
+    ARGV.uniq!
+    debug "ARGV: #{ARGV.inspect}"
+
+    puts CleanFilenames.convert(ARGV, options)
   end
 
-  # supplemental methods here
-
-  # Declare command-line interface here
-
-  # description "one line description of your app"
   description "Convert path names to clean path names"
 
-  #
-  # Accept flags via:
-  # on("--flag VAL","Some flag")
-  # options[flag] will contain VAL
   options["ignore-levels"] == 0
-  on("--ignore-levels IGNORE_LEVEL", "Number of levels in beginning of PATH_NAME to ignore")
-  #
-  # Specify switches via:
-  # on("--[no-]switch","Some switch")
-  #
-  # Or, just call OptionParser methods on opts
-  #
-  # Require an argument
-  # arg :some_arg 
+  on("-i IGNORE_LEVEL","--ignore-levels", "Number of levels in beginning of PATH_NAME to ignore")
+
+  on("-n","--dry-run", "show what would change, but don't change it")
+  on("-d","--[no-]debug","turn on [off] debug")
+  on("-q","--quiet","be very quiet (only error output)")
+
   arg :path_name, "Path name to convert"
-
-
-  #
-  # # Make an argument optional
-  # arg :optional_arg, :optional
 
   version CleanFilenames::VERSION
 
-  use_log_level_option
-
+  leak_exceptions(true)
   go!
 end

@@ -1,40 +1,42 @@
 require "clean_filenames/version"
 require "stringex_lite"
 require "methadone"
-require 'pry'
+require 'pathname'
+# require 'pry'
 
 module CleanFilenames
 
   extend Methadone::CLILogging
 
   DEFAULT_OPTIONS = {}
-  
-  def self.run(*args)
-    options = DEFAULT_OPTIONS.merge(args.pop) if args.last.is_a?(Hash)
-    ignore_levels = options.fetch("ignore-levels", "0").to_i
-    name = args.shift if args.first.is_a?(String)
-    self.convert_name(name,ignore_levels)
-  end
 
-  def self.convert_name(name=nil, ignore_levels=0)
-    # When performing the split below, if there is a leading file
-    # separator on the file name, an empty string will be in the
-    # leading resulting array, just as needed. However, the number of
-    # levels expected needs to be increased to accomodate this fact.
-    ignore_levels += 1 if name[0] == File::SEPARATOR
+  class << self
     
-    parts = name.dup.to_s.split(File::SEPARATOR)
-    leading_parts = []
-    (0...ignore_levels).each {|l| leading_parts.push parts.shift}
-
-    converted_parts = parts.map do |p|
-      extension = File.extname(p)
-      basename = File.basename(p,extension)
-      basename = basename.to_url
-      "#{basename}#{extension}"
+    def convert(paths, options={})
+      @options = DEFAULT_OPTIONS.merge(options)
+      @ignore_levels = @options.fetch("ignore-levels", "0").to_i
+      debug "Converting #{paths.count} paths"
+      paths.each do |path|
+        debug "Path: #{path}"
+        self.convert_path(path, @ignore_levels)
+      end
     end
 
-    File.join(leading_parts + converted_parts)
+    def convert_path(path, ignore_level=0)
+      path = Pathname(path)
+      components = path.to_s.split(File::Separator)
+      save_components = components.shift(ignore_level + (path.absolute? ? 1 : 0))
+
+      components.each do |component|
+        converted_component = convert_component(component)
+        debug "converting #{component} to #{converted_component}"
+      end
+      
+    end
+
+    def convert_component(component)
+      component.to_url.gsub(/-dot-/,'.')
+    end
 
   end
 

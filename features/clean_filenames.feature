@@ -11,11 +11,14 @@ Feature: My bootstrapped app kinda works
     And the following options should be documented:
       |--version|
       |--ignore-levels|
+      |--[no-]debug|
+      |--quiet|
+      
     And the banner should document that this app's arguments are:
       |path_name|
 
   Scenario Outline: Clean file path names
-    When I run `clean_filenames --log-level=debug --ignore-levels=<level> '<path>'`
+    When I run `clean_filenames --debug --dry-run --ignore-levels=<level> '<path>'`
     Then the exit status should be 0
     And the output should contain "<clean>"
 

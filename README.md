@@ -1,45 +1,27 @@
 # CleanFilenames
 
-Convert file name paths to clean paths by converting high-byte and double-byte characters, spaces, capitals, non-alpha-nums, etc, to lowercase alphanums and hyphens.
-
-Example:
-
-    Mary\ Jane\ Lamond/Làn\ Dùil/01\ A\ Mhàiri\ Bhòidheach.mp3 
-
-would be converted to:
-
-    mary-jane-lamond/lan-duil/01-a-mhairi-bhoidheach.mp3
+Convert file name paths to clean paths by converting high-byte and double-byte
+characters, spaces, capitals, non-alpha-nums, etc, to lowercase alphanums and
+hyphens.
 
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'clean_filenames'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install clean_filenames
+    $ sudo gem install clean_filenames
 
 ## Usage
 
-    clean_filenames --ignore-levels=n PATH_NAME
+    clean_filenames --help
 
-where:
+## Example:
 
-* *ignore-levels* is the number of directories in the beginning of PATH_NAME to ignore in conversion.
-
-For example:
-
-        clean_filenames --ignore-levels=3 /media/MyAndroidPhone/Music/Mary\ Jane\ Lamond/Làn\ Dùil/01\ A\ Mhàiri\ Bhòidheach.mp3 
+    $ clean_filenames Mary\ Jane\ Lamond/Làn\ Dùil/01\ A\ Mhàiri\ Bhòidheach.mp3 
 
 would produce:
 
-        /media/MyAndroidPhone/Music/mary-jane-lamond/lan-duil/01-a-mhairi-bhoidheach.mp3
+    mary-jane-lamond/lan-duil/01-a-mhairi-bhoidheach.mp3
+
+By default, `clean_filenames` copies instead of replacing.
 
 ## Contributing
 
